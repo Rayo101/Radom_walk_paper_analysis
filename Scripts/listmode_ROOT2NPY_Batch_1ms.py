@@ -27,10 +27,10 @@ from tqdm import tqdm
 ######INPUTS######  
 ##################
 
-INPUT_PATH = "/home/rayhaan/randomWalk_V3/GATE_Generation/Sigma_2.0mm_Tau_0.08ms_1.2ms_ROOT/"
+INPUT_PATH = "/home/rayhaan/randomWalk_V3/GATE_Generation/Sigma_2.0mm_Varying_Tau_0.08_1.20ms/ROOT/"
 COINCIDENCES_TREE= "Coincidences"
 SINGLES_TREE = "Singles"
-OUT_PATH = "/home/rayhaan/randomWalk_V3/GATE_Generation/Sigma_2.0mm_Tau_0.08ms_1.2ms_NPY/"
+OUT_PATH = "/home/rayhaan/randomWalk_V3/GATE_Generation/Sigma_2.0mm_Varying_Tau_0.08_1.20ms/Lines_NPY/"
 
 #####################
 ######FUNCTIONS######
