@@ -46,9 +46,9 @@ class Velocity:
                 locations: PointData - the locations of which you want to compute the velocity
         """
 
+        self.locations = locations
         if not isinstance(self.locations, PointData):
             raise TypeError("locations need to be of type PointData from the pept package!")
-        self.locations = locations
 
     def _two_point_method(self):
         """
@@ -133,6 +133,16 @@ class Velocity:
         velocity_data = {'t':t_reduced, 'vx':dxdt, 'vy':dydt, 'vz':dzdt, 'v':sp}
         return velocity_data
     
+    def _strictly_increasing(self, arr):
+        arr = list(arr)
+        res = [arr[0]]
+        ind = [0]
+        for index, ele in enumerate(arr):
+            if ele > res[-1]:
+                res.append(ele)
+                ind.append(index)
+        return ind
+        
     def _spline_method(self, porder):
         """
         Implementation of spline interpolation in order to calculate
@@ -141,11 +151,19 @@ class Velocity:
         Output:
                 out: dictionary - Contains t, vx, vy, vz, v (speed), porder, rmsdevx, rmsdevy, rmsdevz
         """
+        # find duplicate t values
+        StriclyIncreasingInd = self._strictly_increasing(arr = self.locations['t'])
 
         x = self.locations['x']
         y = self.locations['y']
         z = self.locations['z']
         t = self.locations['t']
+
+        # remove duplicate t values and positions from list
+        x = x[StriclyIncreasingInd]
+        y = y[StriclyIncreasingInd]
+        z = z[StriclyIncreasingInd]
+        t = t[StriclyIncreasingInd]
 
         # doubt this will lead to speedup but for time I'm leaving it becasue it works - R Perin 27-03-2024
         dxdt = np.zeros((len(t)))
